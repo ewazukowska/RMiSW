@@ -157,3 +157,117 @@ L %*% U
 A
 ```
 
+# Eliminacja Gaussa
+
+### Algorytm eliminacji Gaussa bez pivotingu generujący jedynki na przekątnej
+
+```{r}
+gauss <- function(m, b) {
+  m_copy <- m
+  n <- nrow(m)
+  
+  m_copy <- cbind(m_copy, b)
+  
+  for (row in 1:(n - 1)) {
+    coef_div <- m_copy[row, row]
+    m_copy[row, ] <- m_copy[row, ] / coef_div
+    
+    for (j in (row + 1):n) {
+      coef_sub <- m_copy[j, row]
+      m_copy[j, ] <- m_copy[j, ] - m_copy[row, ] * coef_sub
+    }
+  }
+  
+  # Normalizacja ostatniego wiersza, jeśli to konieczne
+  if (m_copy[n, n] != 1) {
+    m_copy[n, ] <- m_copy[n, ] / m_copy[n, n]
+  }
+  
+  # Zwrócenie macierzy i wektora b
+  return(list(matrix = m_copy[, -ncol(m_copy)], vector = m_copy[, ncol(m_copy)]))
+}
+```
+
+### Algorytm eliminacji Gaussa z pivotingiem
+
+```{r}
+gauss_with_pivot <- function(m, b) {
+  m_copy <- m
+  n <- nrow(m)
+  
+  m_copy <- cbind(m_copy, b)
+  
+  for (i in 1:(n - 1)) {
+    pivot <- max(m_copy[(i + 1):n, i])
+    max_row_index <- which.max(m_copy[(i + 1):n, i] == pivot) + i
+    
+    if (pivot > m_copy[i, i]) {
+      temp_row <- m_copy[i, ]
+      m_copy[i, ] <- m_copy[max_row_index, ]
+      m_copy[max_row_index, ] <- temp_row
+    }
+    
+    for (j in (i + 1):n) {
+      coef <- m_copy[j, i] / m_copy[i, i]
+      m_copy[j, ] <- m_copy[j, ] - m_copy[i, ] * coef
+    }
+  }
+  
+  # Return the matrix and b vector separately
+  return(list(matrix = m_copy[, -ncol(m_copy)], vector = m_copy[, ncol(m_copy)]))
+}
+```
+
+```{r}
+solve <- function(m, b, func) {
+  # Gauss elimination
+  result <- func(m, b)
+  coef_matrix <- result$matrix
+  b_vector <- result$vector
+  
+  n <- nrow(coef_matrix)
+  x <- numeric(n)
+
+  # Wsteczne podstawianie
+  for (i in seq(n-1, 1, -1) {
+    x[i] <- (b_vector[i] - sum(coef_matrix[i, (i + 1):n] * x[(i + 1):n])) / coef_matrix[i, i]
+  }
+  
+  
+  return(x)
+}
+```
+
+```{r}
+date <- 28 + 6
+birthday_matrix <- matrix(sample(1:9, date*date, replace=TRUE), nrow=34)
+v <- t(matrix(runif(34, min=-100, max=100), nrow=1))
+```
+
+```
+# calculate results for Gauss and Gauss with Pivot
+x6 <- solve(birthday_matrix, v, gauss)
+print(x6)
+
+x7 <- solve(birthday_matrix, v, gauss_with_pivot)
+print(x7)
+```
+
+```{r}
+identical(x6, x7)
+```
+
+
+```{r}
+# check if correct - Gauss
+r1 <- birthday_matrix %*% x6
+identical(r1, v)
+v - r1
+```
+
+```{r}
+# check if correct - Gauss with pivot
+r2 <- birthday_matrix %*% x7
+identical(r2, v)
+v - r2
+```
