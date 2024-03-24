@@ -32,6 +32,7 @@ m <- matrix(c(3, 2, 3, 4,
               1, 2, 3, 1), nrow = 4, byrow = TRUE)
 
 # Przykładowy wektor
+
 b <- matrix(c(10, 11, 12, 3), ncol = 1)
 
 # Wywołanie funkcji gauss
@@ -44,15 +45,6 @@ print(result$matrix)
 print("Wektor b:")
 print(result$vector)
 
-
-
-
-
-
-
-
-
-#---------------------------------------------------
 
 
 gauss_with_pivot <- function(m, b) {
@@ -82,7 +74,29 @@ gauss_with_pivot <- function(m, b) {
 }
 
 
-#---------------------------------------
+
+
+
+# Przykładowa macierz 4x4
+m <- matrix(c(3, 2, 3, 4,
+              4, 5, 6, 6,
+              1, 2, 3, 7,
+              1, 2, 3, 1), nrow = 4, byrow = TRUE)
+
+# Przykładowy wektor
+b <- c(10, 11, 12, 3)
+
+# Wywołanie funkcji gauss
+result2 <- gauss_with_pivot(m, b)
+
+# Wyświetlenie wyników
+print("Macierz współczynników:")
+print(result2$matrix)
+
+print("Wektor b:")
+print(result2$vector)
+
+
 
 
 
