@@ -337,5 +337,4 @@ is_allclose(v,r2)
 ```
 
 ![alt text](ep_images/check_gauss.png)
-![alt text](ep_images/check_pivot.png)
-
+![alt text](ep_images/check_pivot1.png)
