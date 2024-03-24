@@ -275,8 +275,10 @@ gauss_with_pivot <- function(m, b) {
 3. Określ liczbę równań 'n' na podstawie liczby wierszy macierzy 'coef_matrix'.
 4. Zainicjuj wektor wynikowy 'x' jako pusty wektor numeryczny o długości 'n'.
 
-5. Dla każdego 'i' od 'n-1' do 1 (wsteczne podstawianie):
-  - a. Oblicz x[i] jako (b_vector[i] - suma iloczynów współczynników wiersza 'i' i odpowiadających im elementów wektora 'x' z kolejnych kolumn od (i+1) do 'n'), podzielone przez współczynnik wiersza 'i' na głównej przekątnej.
+5. Wsteczne podstawianie:
+  - a. Dla każdego i od n do 1, malejąco:
+    - i. Oblicz x[i] jako iloraz b_vector[i] i coef_matrix[i, i].
+    - ii. Jeśli i < n, oblicz x[i] jako różnicę b_vector[i] i sumy iloczynów elementów coef_matrix[i, (i + 1):n] i x[(i + 1):n], podzieloną przez coef_matrix[i, i].
 
 6. Zwróć wektor wynikowy 'x'.
 
@@ -288,15 +290,19 @@ solve <- function(m, b, func) {
   result <- func(m, b)
   coef_matrix <- result$matrix
   b_vector <- result$vector
+  print(coef_matrix)
   
   n <- nrow(coef_matrix)
   x <- numeric(n)
 
   # Wsteczne podstawianie
-  for (i in seq(n-1, 1, -1) {
-    x[i] <- (b_vector[i] - sum(coef_matrix[i, (i + 1):n] * x[(i + 1):n])) / coef_matrix[i, i]
+  for (i in seq(n, 1, -1)) {
+    
+    x[i] <- b_vector[i]/coef_matrix[i, i]
+    if (i < n) {
+      x[i] <- (b_vector[i] - sum(coef_matrix[i, (i + 1):n] * x[(i + 1):n])) / coef_matrix[i, i]
+    }
   }
-  
   
   return(x)
 }
@@ -330,4 +336,6 @@ r2 <- birthday_matrix %*% x7
 is_allclose(v,r2)
 ```
 
+![alt text](ep_images/check_gauss.png)
+![alt text](ep_images/check_pivot.png)
 
