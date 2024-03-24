@@ -166,12 +166,12 @@ Macierz rozmiaru dzień urodzenia + miesiąc urodzenia
 
 ```{r}
 date <- 28 + 6
-birthday_matrix <- matrix(sample(1:9, date*date, replace=TRUE), nrow=34)
+birthday_matrix <- matrix(sample(1:9, date*date, replace=TRUE), nrow=date)
 ```
 
 Wektor wyrazów wolnych do układu równań
 ```{r}
-v <- t(matrix(runif(date, min=-100, max=100), nrow=1))
+v <- t(matrix(runif(date, min=-10, max=20), nrow=1))
 ```
 
 ### Pseudokod algorytmu eliminacji Gaussa generującego jedynki
