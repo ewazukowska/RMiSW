@@ -1,5 +1,7 @@
 # RMiSW
 
+
+
 Rozmiar macierzy: 20 + 5 = 25
 
 ```{r}
@@ -159,7 +161,35 @@ A
 
 # Eliminacja Gaussa
 
-### Algorytm eliminacji Gaussa bez pivotingu generujący jedynki na przekątnej
+
+Macierz rozmiaru dzień urodzenia + miesiąc urodzenia
+
+```{r}
+date <- 28 + 6
+birthday_matrix <- matrix(sample(1:9, date*date, replace=TRUE), nrow=34)
+```
+
+Wektor wyrazów wolnych do układu równań
+```{r}
+v <- t(matrix(runif(date, min=-100, max=100), nrow=1))
+```
+
+### Pseudokod algorytmu eliminacji Gaussa generującego jedynki
+
+1. Dla każdego wiersza 'row' od 1 do (n - 1):
+- a. coef_div = m_copy[row, row]
+- b. Dla każdego wiersza 'j' od (row + 1) do n:
+    - i. coef_sub = m_copy[j, row]
+    - ii. m_copy[j, ] = m_copy[j, ] - m_copy[row, ] * coef_sub
+
+2. Jeśli ostatni wiersz nie jest znormalizowany (m_copy[n, n] != 1):
+  - a. m_copy[n, ] = m_copy[n, ] / m_copy[n, n] 
+
+3. Zwróć macierz (bez ostatniej kolumny) i ostatnią kolumnę (wektor b) z m_copy.
+
+
+
+### Algorytm eliminacji Gaussa generujący jedynki na przekątnej
 
 ```{r}
 gauss <- function(m, b) {
@@ -187,6 +217,23 @@ gauss <- function(m, b) {
   return(list(matrix = m_copy[, -ncol(m_copy)], vector = m_copy[, ncol(m_copy)]))
 }
 ```
+![alt text](ep_images/gauss_elimination.png)
+
+### Pseudokod algorytmu eliminacji Gaussa z pivotingiem
+
+1. Dla każdej kolumny 'i' od 1 do (n - 1):
+- a. Znajdź pivot jako maksymalną wartość w kolumnie 'i' dla wierszy od (i + 1) do n.
+- b. Znajdź indeks wiersza z maksymalnym pivotem: max_row_index = indeks wiersza z maksymalnym pivotem + i.
+
+    - Jeśli pivot > m_copy[i, i]:
+          Zamień miejscami wiersze 'i' i 'max_row_index' w macierzy 'm_copy'.
+
+    - Dla każdego wiersza 'j' od (i + 1) do n:
+      - i. Oblicz współczynnik coef = m_copy[j, i] / m_copy[i, i].
+      - ii. Odjęcie wiersza 'i' pomnożonego przez coef od wiersza 'j'.
+
+2. Zwróć macierz (bez ostatniej kolumny) i ostatnią kolumnę (wektor b) z m_copy.
+
 
 ### Algorytm eliminacji Gaussa z pivotingiem
 
@@ -218,6 +265,23 @@ gauss_with_pivot <- function(m, b) {
 }
 ```
 
+![alt text](ep_images/gauss_pivot.png)
+
+
+### Pseudokod funkcji solve()
+
+1. Wykonaj eliminację Gaussa na macierzy 'm' i wektorze 'b' za pomocą funkcji 'func', która zwraca macierz współczynników i wektor 'b' po eliminacji.
+2. Przypisz macierz współczynników do 'coef_matrix' i wektor 'b' do 'b_vector'.
+3. Określ liczbę równań 'n' na podstawie liczby wierszy macierzy 'coef_matrix'.
+4. Zainicjuj wektor wynikowy 'x' jako pusty wektor numeryczny o długości 'n'.
+
+5. Dla każdego 'i' od 'n-1' do 1 (wsteczne podstawianie):
+  - a. Oblicz x[i] jako (b_vector[i] - suma iloczynów współczynników wiersza 'i' i odpowiadających im elementów wektora 'x' z kolejnych kolumn od (i+1) do 'n'), podzielone przez współczynnik wiersza 'i' na głównej przekątnej.
+
+6. Zwróć wektor wynikowy 'x'.
+
+
+### Funkcja solve() rozwiązująca układ równań
 ```{r}
 solve <- function(m, b, func) {
   # Gauss elimination
@@ -238,36 +302,32 @@ solve <- function(m, b, func) {
 }
 ```
 
-```{r}
-date <- 28 + 6
-birthday_matrix <- matrix(sample(1:9, date*date, replace=TRUE), nrow=34)
-v <- t(matrix(runif(34, min=-100, max=100), nrow=1))
-```
+Obliczenie wyników korzystając z obu algorytmów eliminacji Gaussa
 
 ```
 # calculate results for Gauss and Gauss with Pivot
 x6 <- solve(birthday_matrix, v, gauss)
-print(x6)
-
 x7 <- solve(birthday_matrix, v, gauss_with_pivot)
-print(x7)
 ```
+
+Sprawdzenie czy rozwiązania są identyczne dla obu metod eliminacji
 
 ```{r}
 identical(x6, x7)
 ```
 
+W celu sprawdzenia poprawności (czy oryginalna macierz przemnożona przez wektor X rozwiązań jest równa wektorowi b) ponownie wykorzystujemy funkcję *is_allclose()*, która dopuszcza ustalony błąd 
 
 ```{r}
 # check if correct - Gauss
 r1 <- birthday_matrix %*% x6
-identical(r1, v)
-v - r1
+is_allclose(v,r1)
 ```
 
 ```{r}
 # check if correct - Gauss with pivot
 r2 <- birthday_matrix %*% x7
-identical(r2, v)
-v - r2
+is_allclose(v,r2)
 ```
+
+
