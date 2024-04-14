@@ -59,10 +59,10 @@
 
 ## Dane
 
-Do testów poprawności funkcji wykorzystano macierz rozmiaru 2x2 z wykładu.
+Do testów poprawności funkcji wykorzystano macierz tybetańską rozmiaru 3x3 z wykładu.
 
 ```{python}
-a1 = np.array([[1, 2], [3, 4]])
+a1 = np.array([[4, 9, 2], [3, 5, 7], [8, 1, 6]])
 ```
 ![alt text](im_Ewa/matrix.png)
 
