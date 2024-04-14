@@ -121,7 +121,7 @@ Współczynnik uwarunkowania:
 
 Norma indukowana dwójkowa jest obliczana  największa (na moduł) wartość własna macierzy A. Jest to alternatywny sposób obliczania zaprezentowany na wykładzie.
 
-Zgodnie z wytycznymi, do wyznaczenia wektorów i wartości własnych macierzy posłużono się biblioteką numerycznej ze wybranego języka programowania.
+Zgodnie z wytycznymi, do wyznaczenia wektorów i wartości własnych macierzy posłużono się biblioteką numerycznej z wybranego języka programowania.
 
 
 ```{python}
