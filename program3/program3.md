@@ -64,7 +64,7 @@ Do testów poprawności funkcji wykorzystano macierz tybetańską rozmiaru 3x3 z
 ```{python}
 a1 = np.array([[4, 9, 2], [3, 5, 7], [8, 1, 6]])
 ```
-![alt text](im_Ewa/matrix.png)
+![alt text](im_ewa/matrix.png)
 
 ## Norma indukowana jedynkowa
 
@@ -80,7 +80,7 @@ def norm1(m):
 
 **Wynik dla macierzy a1:**
 
-![alt text](im_Ewa/norm1.png)
+![alt text](im_ewa/norm1.png)
 
 
 **Współczynnik uwarunkowania dla normy jedynkowej i macierzy a1:**
