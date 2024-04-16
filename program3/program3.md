@@ -161,17 +161,8 @@ Współczynnik uwarunkowania:
 
 ## Rozkład według wartości własnych - Singular Value Decomposition (SVD)
 
-W ramach projektu przeprowadzono implementację algorytmu Singular Value Decomposition (SVD) do rozkładu macierzy.
 
-Każdą macierz rzeczywistą $A$ można przedstawić w postaci rozkładu SVD:
-
-$$ A = U \Sigma V^T, $$
-
-gdzie:
-
-- $U$ i $V$ – macierze ortogonalne (czyli $U^{-1} = U^T$, $V^{-1} = V^T$),
-- $\Sigma$ – macierz diagonalna (przekątniowa), taka że $\Sigma = \text{diag}(\sigma_i)$, gdzie $\sigma_i$ – nieujemne wartości szczególne (osobliwe) macierzy $A$, zwyczajowo uporządkowane nierosnąco.
-
+![alt text](im_ewa/img.png)
 
 ### Pseudokod
 > Input: Macierz A o wymiarach m x n \
