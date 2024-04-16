@@ -256,10 +256,10 @@ Macierz V transponowane:
 
 Macierz U*Σ*V^T = A:
 
-\[
+
 \begin{bmatrix}
 1 & 3 & 5 \\
 2 & 4 & 6 \\
 \end{bmatrix}
-\]
+
 
