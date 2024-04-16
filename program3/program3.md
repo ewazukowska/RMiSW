@@ -161,3 +161,5 @@ Współczynnik uwarunkowania:
 
 ## Rozkład według wartości własnych - Singular Value Decomposition (SVD)
 
+$A$
+
