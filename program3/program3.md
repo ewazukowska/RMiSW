@@ -229,37 +229,26 @@ U, Sigma, Vt = svd(A)
 
 Macierz U:
 
-\begin{bmatrix}
--0.78489445 & 0.61962948 \\
-0.61962948 & 0.78489445 \\
-\end{bmatrix}
+<img src="im_ewa/U.png" alt="Opis obrazka" width="150" height="50">
 
 
 Macierz Sigma:
 
+<img src="im_ewa/S.png" alt="Opis obrazka" width="150" height="50">
 
-\begin{bmatrix}
-0.51430058 & 0 \\
-0 & 9.52551809 \\
-\end{bmatrix}
 
 
 Macierz V transponowane:
 
 
-\begin{bmatrix}
-0.88346102 & 0.24078249 & -0.40189603 \\
-0.2298477 & 0.52474482 & 0.81964194 \\
-\end{bmatrix}
+<img src="im_ewa/V.png" alt="Opis obrazka" width="230" height="50">
+
 
 
 Macierz U*Σ*V^T = A:
 
 
-\begin{bmatrix}
-1 & 3 & 5 \\
-2 & 4 & 6 \\
-\end{bmatrix}
+<img src="im_ewa/A.png" alt="Opis obrazka" width="100" height="50">
 
 
 
