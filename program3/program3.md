@@ -215,7 +215,7 @@ def svd(A):
     return U, Sigma, V.T
 ```
 
-### Wyniki
+### Wyniki dla macierzy 
 
 ```python
 A = np.array([[4, 9, 2], [3, 5, 7], [8, 1, 6]])
@@ -225,19 +225,19 @@ U, Sigma, Vt = svd(A)
 
 Macierz U:
 
-<img src="im_ewa/U.png" alt="Opis obrazka" width="280" height="70">
+<img src="im_ewa/U.png" alt="Opis obrazka" width="300" height="70">
 
 
 Macierz Sigma:
 
-<img src="im_ewa/S.png" alt="Opis obrazka" width="280" height="70">
+<img src="im_ewa/S.png" alt="Opis obrazka" width="300" height="70">
 
 
 
 Macierz V transponowane:
 
 
-<img src="im_ewa/V.png" alt="Opis obrazka" width="280" height="70">
+<img src="im_ewa/V.png" alt="Opis obrazka" width="300" height="70">
 
 
 
