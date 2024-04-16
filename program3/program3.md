@@ -43,6 +43,8 @@
 
 # 
 
+# 
+
 
 # 
 
@@ -158,7 +160,9 @@ Współczynnik uwarunkowania:
 
 ![alt text](im_ewa/coefp.png)
 
+# 
 
+# 
 ## Rozkład według wartości własnych - Singular Value Decomposition (SVD)
 
 
@@ -214,7 +218,8 @@ def svd(A):
 ### Wyniki
 
 ```python
-A = np.array([[1, 2], [3, 4], [5, 6]])
+A = np.array([[4, 9, 2], [3, 5, 7], [8, 1, 6]])
+
 U, Sigma, Vt = svd(A)
 ```
 
