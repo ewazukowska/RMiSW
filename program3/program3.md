@@ -229,30 +229,29 @@ U, Sigma, Vt = svd(A)
 
 Macierz U:
 
-\[
 \begin{bmatrix}
 -0.78489445 & 0.61962948 \\
 0.61962948 & 0.78489445 \\
 \end{bmatrix}
-\]
+
 
 Macierz Sigma:
 
-\[
+
 \begin{bmatrix}
 0.51430058 & 0 \\
 0 & 9.52551809 \\
 \end{bmatrix}
-\]
+
 
 Macierz V transponowane:
 
-\[
+
 \begin{bmatrix}
 0.88346102 & 0.24078249 & -0.40189603 \\
 0.2298477 & 0.52474482 & 0.81964194 \\
 \end{bmatrix}
-\]
+
 
 Macierz U*Σ*V^T = A:
 
@@ -261,5 +260,6 @@ Macierz U*Σ*V^T = A:
 1 & 3 & 5 \\
 2 & 4 & 6 \\
 \end{bmatrix}
+
 
 
