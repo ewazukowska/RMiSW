@@ -104,7 +104,7 @@ Im większy współczynnik uwarunkowania, tym bardziej macierz jest źle uwarunk
 
 Norma indukowana nieskończoność jest obliczona jako maksymalna suma wartości bezwzględnych z wierszy. Jest to alternatywny sposób obliczania normy nieskończoność zaprezentowany na wykładzie.
 
-```{python}
+```python
 def norm_inf(m):
     return np.max([sum(abs(row)) for row in m])
 ```
@@ -124,7 +124,7 @@ Norma indukowana dwójkowa jest obliczana  największa (na moduł) wartość wł
 Zgodnie z wytycznymi, do wyznaczenia wektorów i wartości własnych macierzy posłużono się biblioteką numerycznej z wybranego języka programowania.
 
 
-```{python}
+```python
 def norm2(m):
     return np.max(abs(np.linalg.eig(m).eigenvalues))
 ```
@@ -143,7 +143,7 @@ P-norma macierzowa jest obliczana jako p-norma wektorowa zastosowana do każdego
 
 Wykonano obliczenia dla p=4
 
-```{python}
+```python
 def normp(m, p):
     inner = np.sum(np.power(m, p))
     outer = np.power(inner, (1/p))
@@ -161,5 +161,105 @@ Współczynnik uwarunkowania:
 
 ## Rozkład według wartości własnych - Singular Value Decomposition (SVD)
 
-$A$
+W ramach projektu przeprowadzono implementację algorytmu Singular Value Decomposition (SVD) do rozkładu macierzy.
+
+Każdą macierz rzeczywistą $A$ można przedstawić w postaci rozkładu SVD:
+
+$$ A = U \Sigma V^T, $$
+
+gdzie:
+
+- $U$ i $V$ – macierze ortogonalne (czyli $U^{-1} = U^T$, $V^{-1} = V^T$),
+- $\Sigma$ – macierz diagonalna (przekątniowa), taka że $\Sigma = \text{diag}(\sigma_i)$, gdzie $\sigma_i$ – nieujemne wartości szczególne (osobliwe) macierzy $A$, zwyczajowo uporządkowane nierosnąco.
+
+
+### Pseudokod
+> Input: Macierz A o wymiarach m x n \
+> Output: Macierze U, ∑, V^T
+>
+> 1. Oblicz macierz kowariancji C = A^T * A
+>
+> 2. Znajdź dominujące wektory własne macierzy kowariancji C za pomocą metody potęgowej: \
+   > Dla każdego i od 1 do k:\
+     a) Losowo wygeneruj wektor startowy v\
+     b) Dla zadanego kroku iteracyjnego j od 1 do max_iter:
+          v = C * v
+          v = v / ||v|| \
+     c) Dodaj uzyskany wektor własny do listy dominujących wektorów własnych
+> 3. Przekształć uzyskane dominujące wektory własne na macierze ortogonalne U i V:
+   U = [v_1, v_2, ..., v_k]
+   V = [u_1, u_2, ..., u_k]
+> 4. Oblicz wartości własne macierzy kowariancji C i przekształć je w macierz diagonalną ∑:
+   Dla każdej wartości własnej λ_i:
+     ∑_i = sqrt(λ_i)
+   ∑ = diag( [∑_1, ∑_2, ..., ∑_k] )
+> 5. Zwróć macierze U, ∑, V transponowane
+> 
+
+### Kod
+
+
+```python
+def svd(A):
+    # Obliczenie macierzy kowariancji
+    C = np.dot(A.T, A)
+    
+    # Znalezienie dominujących wektorów własnych 
+    # macierzy kowariancji
+    eigenvalues, eigenvectors = np.linalg.eigh(C)
+    
+    # Przekształcenie dominujących wektorów własnych
+    # na macierze ortogonalne U i V
+    U = eigenvectors
+    V = np.dot(A, U) / np.linalg.norm(np.dot(A, U), axis=0)
+    
+    # Obliczenie macierzy Sigma
+    s = np.sqrt(np.abs(eigenvalues))
+    Sigma = np.diag(s)
+    
+    return U, Sigma, V.T
+```
+
+### Wyniki
+
+```python
+A = np.array([[1, 2], [3, 4], [5, 6]])
+U, Sigma, Vt = svd(A)
+```
+
+Macierz U:
+
+\[
+\begin{bmatrix}
+-0.78489445 & 0.61962948 \\
+0.61962948 & 0.78489445 \\
+\end{bmatrix}
+\]
+
+Macierz Sigma:
+
+\[
+\begin{bmatrix}
+0.51430058 & 0 \\
+0 & 9.52551809 \\
+\end{bmatrix}
+\]
+
+Macierz V transponowane:
+
+\[
+\begin{bmatrix}
+0.88346102 & 0.24078249 & -0.40189603 \\
+0.2298477 & 0.52474482 & 0.81964194 \\
+\end{bmatrix}
+\]
+
+Macierz U*Σ*V^T = A:
+
+\[
+\begin{bmatrix}
+1 & 3 & 5 \\
+2 & 4 & 6 \\
+\end{bmatrix}
+\]
 
